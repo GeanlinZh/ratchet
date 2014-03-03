@@ -4,6 +4,7 @@
  * http://opensource.org/licenses/MIT
  * ---------------------------------- */
 
+/* jshint node: true */
 module.exports = function(grunt) {
   'use strict';
 
@@ -133,6 +134,21 @@ module.exports = function(grunt) {
       docs: {}
     },
 
+    jshint: {
+      options: {
+        jshintrc: 'js/.jshintrc'
+      },
+      grunt: {
+        src: 'Gruntfile.js'
+      },
+      src: {
+        src: 'js/*.js'
+      },
+      docs: {
+        src: ['docs/assets/js/docs.js', 'docs/assets/js/fingerblast.js']
+      }
+    },
+
     validation: {
       options: {
         charset: 'utf-8',
@@ -171,8 +187,8 @@ module.exports = function(grunt) {
   grunt.registerTask('dist-js', ['concat', 'uglify']);
   grunt.registerTask('dist', ['dist-css', 'dist-js', 'copy']);
   grunt.registerTask('validate-html', ['jekyll', 'validation']);
-  grunt.registerTask('default', ['dist']);
   grunt.registerTask('build', ['dist']);
+  grunt.registerTask('default', ['dist']);
   grunt.registerTask('test', ['dist', 'validate-html']);
 
   // Version numbering task.
