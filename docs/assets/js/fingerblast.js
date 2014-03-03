@@ -2,6 +2,8 @@
 // --------------
 // Adapted from phantom limb by Brian Cartensen
 
+/* global GLOBAL: true */
+
 function FingerBlast(element) {
   'use strict';
 

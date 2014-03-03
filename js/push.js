@@ -5,6 +5,8 @@
  * http://opensource.org/licenses/MIT
  * ---------------------------------- */
 
+/* global _gaq: true */
+
 !function () {
   'use strict';
 
@@ -299,37 +301,37 @@
     if (transition === 'fade') {
       container.offsetWidth; // force reflow
       container.classList.remove('in');
-      container.addEventListener('webkitTransitionEnd', fadeContainerEnd);
-
-      function fadeContainerEnd() {
+      var fadeContainerEnd = function () {
         container.removeEventListener('webkitTransitionEnd', fadeContainerEnd);
         swap.classList.add('in');
         swap.addEventListener('webkitTransitionEnd', fadeSwapEnd);
-      }
-      function fadeSwapEnd () {
+      };
+      var fadeSwapEnd = function () {
         swap.removeEventListener('webkitTransitionEnd', fadeSwapEnd);
         container.parentNode.removeChild(container);
         swap.classList.remove('fade');
         swap.classList.remove('in');
         complete && complete();
-      }
+      };
+      container.addEventListener('webkitTransitionEnd', fadeContainerEnd);
+
     }
 
     if (/slide/.test(transition)) {
+      var slideEnd = function () {
+        swap.removeEventListener('webkitTransitionEnd', slideEnd);
+        swap.classList.remove('sliding', 'sliding-in');
+        swap.classList.remove(swapDirection);
+        container.parentNode.removeChild(container);
+        complete && complete();
+      };
+
       container.offsetWidth; // force reflow
       swapDirection      = enter ? 'right' : 'left';
       containerDirection = enter ? 'left' : 'right';
       container.classList.add(containerDirection);
       swap.classList.remove(swapDirection);
       swap.addEventListener('webkitTransitionEnd', slideEnd);
-
-      function slideEnd() {
-        swap.removeEventListener('webkitTransitionEnd', slideEnd);
-        swap.classList.remove('sliding', 'sliding-in');
-        swap.classList.remove(swapDirection);
-        container.parentNode.removeChild(container);
-        complete && complete();
-      }
     }
   };
 

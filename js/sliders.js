@@ -31,7 +31,8 @@
 
   var getScroll = function () {
     var translate3d = slider.style.webkitTransform.match(/translate3d\(([^,]*)/);
-    return parseInt(translate3d ? translate3d[1] : 0)
+    var ret = translate3d ? translate3d[1] : 0;
+    return parseInt(ret, 10);
   };
 
   var setSlideNumber = function (offset) {

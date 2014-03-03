@@ -1,3 +1,6 @@
+/* jshint jquery: true */
+/* global FingerBlast: true */
+
 $(function() {
   'use strict';
 
